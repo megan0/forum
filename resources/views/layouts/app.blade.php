@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -35,7 +35,16 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-
+                        @auth
+                            <li class="nav-item">
+                                <a href="" class="nav-link">
+                                    <span class="badge badge-info">
+                                        {{auth()->user()->unreadNotifications->count()}}
+                                        Unread notifications
+                                    </span>
+                                </a>
+                            </li>
+                        @endauth
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -84,7 +93,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 @auth
-                                    <a href="{{route('discussion.create')}}" style='width:100% ' class="btn btn-info my-2">
+                                    <a href="{{route('discussions.create')}}" style='width:100% ' class="btn btn-info my-2">
                                         Add Discussion
                                     </a>
                                 @else

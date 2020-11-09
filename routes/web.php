@@ -17,10 +17,16 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes(['verify'=>true]);
+Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::resource('discussion', App\Http\Controllers\DiscussionsController::class);
+Route::resource('discussions', App\Http\Controllers\DiscussionsController::class);
+
+Route::post('/replies/{discussion}',[App\Http\Controllers\RepliesController::class, 'store'])->name('reply.store');
 
 Route::resource('discussions/{discusion}/replies', App\Http\Controllers\RepliesController::class);
+
+Route::post('discussions/{discussion}/replies/{reply}/mark-as-best-reply',[App\Http\Controllers\DiscussionsController::class, 'reply'])->name('best.reply');
+
+Route::get('users/notifications',[App\Http\Controllers\UsersController::class, 'notifications'])->name('notifications');

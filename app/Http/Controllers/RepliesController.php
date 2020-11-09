@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\CreateReplyRequest;
+use App\Models\Discussion;
+use App\Notifications\NewRepplyAdded;
 
 class RepliesController extends Controller
 {
@@ -32,9 +35,17 @@ class RepliesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateReplyRequest $request, Discussion $discussion)
     {
-        //
+        auth()->user()->replies()->create([
+            'discussion_id'=>$discussion->id,
+            'content'=>$request->content
+        ]);
+
+        $discussion->user->notify(new NewRepplyAdded($discussion));
+
+        session()->flash('success','Reply added.');
+        return redirect()->back();
     }
 
     /**
