@@ -17,7 +17,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+Auth::routes(['verify'=>true]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
@@ -29,4 +29,4 @@ Route::resource('discussions/{discusion}/replies', App\Http\Controllers\RepliesC
 
 Route::post('discussions/{discussion}/replies/{reply}/mark-as-best-reply',[App\Http\Controllers\DiscussionsController::class, 'reply'])->name('best.reply');
 
-Route::get('users/notifications',[App\Http\Controllers\UsersController::class, 'notifications'])->name('notifications');
+Route::get('users/notifications',[App\Http\Controllers\UsersController::class, 'notifications'])->name('users.notifications');

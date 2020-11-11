@@ -2,8 +2,6 @@
 
 @section('content')
 
-
-
         <div class="card">
                 @include('partials.discussion-header')
 
@@ -53,12 +51,14 @@
                             <span>{{$reply->user->name}}</span>
                         </div>
                         <div>
-                            @if(auth()->user()->id==$discussion->user_id)
-                                <form action="{{route('best.reply', ['discussion'=>$discussion->slug,'reply'=>$reply->id])}}" method='POST'>
-                                    @csrf
-                                    <button type='submit'>Mark as best reply</button>
-                                </form>
-                            @endif
+                            @auth
+                                @if(auth()->user()->id==$discussion->user_id)
+                                    <form action="{{route('best.reply', ['discussion'=>$discussion->slug,'reply'=>$reply->id])}}" method='POST'>
+                                        @csrf
+                                        <button type='submit'>Mark as best reply</button>
+                                    </form>
+                                @endif
+                            @endauth
                         </div>
                     </div>
                 </div>

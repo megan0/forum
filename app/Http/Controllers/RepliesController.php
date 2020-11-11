@@ -42,7 +42,9 @@ class RepliesController extends Controller
             'content'=>$request->content
         ]);
 
-        $discussion->user->notify(new NewRepplyAdded($discussion));
+        if($discussion->user->id!=auth()->user()->id){
+            $discussion->user->notify(new NewRepplyAdded($discussion));
+        }
 
         session()->flash('success','Reply added.');
         return redirect()->back();

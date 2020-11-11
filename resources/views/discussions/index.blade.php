@@ -5,7 +5,7 @@
 
 
 @foreach($discussions as $discussion)
-        <div class="card">
+        <div class="card mb-4">
                 @include('partials.discussion-header')
 
                 <div class="card-body">
@@ -21,6 +21,7 @@
                 </div>
         </div>
 @endforeach
-
-{{$discussion->links}}
+<!-- @if(!$discussions->isEmpty()) -->
+{{$discussions->appends(['channel'=>request()->query('channel')])->links()}}
+<!-- @endif -->
 @endsection
